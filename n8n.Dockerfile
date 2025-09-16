@@ -1,16 +1,12 @@
 FROM n8nio/n8n:latest
 
-# Configuração para Railway
-USER root
+# Configurações mínimas para Railway
+ENV N8N_HOST=0.0.0.0
+ENV N8N_PORT=${PORT}
+ENV N8N_PROTOCOL=https
 
-# Instalar dependências se necessário
-RUN npm install -g npm@latest
+# Expor porta
+EXPOSE ${PORT}
 
-# Voltar para usuário n8n
-USER node
-
-# Porta que o Railway vai usar
-EXPOSE 5678
-
-# Comando de inicialização simplificado
-CMD ["n8n"]
+# Comando simples
+CMD ["n8n", "start"]
