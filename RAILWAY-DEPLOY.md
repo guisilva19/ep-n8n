@@ -28,26 +28,41 @@
 4. **Settings** > **Build**:
    - Dockerfile Path: `n8n.Dockerfile`
 
-### **Variáveis de ambiente N8N:**
+### **❌ ERRO 502 - CORREÇÕES APLICADAS:**
+
+**Problemas identificados:**
+1. ✅ **Porta**: Corrigida para usar `${PORT}` do Railway
+2. ✅ **Host**: Configurado para `0.0.0.0` 
+3. ✅ **Protocol**: Configurado para `https`
+
+### **Variáveis de ambiente N8N (ATUALIZADAS):**
 ```env
+# ⚠️  IMPORTANTE: Use essas variáveis no Railway
 # Basic Config
+N8N_HOST=0.0.0.0
+N8N_PROTOCOL=https
 GENERIC_TIMEZONE=America/Sao_Paulo
-N8N_LOG_LEVEL=debug
+N8N_LOG_LEVEL=info
 N8N_COMMUNITY_PACKAGES_ALLOW_TOOL_USAGE=true
 
-# Database
+# Database (SQLite é mais simples para Railway)
 DB_TYPE=sqlite
 
-# Redis (usar variáveis do Redis Railway)
-N8N_REDIS_HOST=${{Redis.REDIS_HOST}}
-N8N_REDIS_PORT=${{Redis.REDIS_PORT}}
-N8N_REDIS_PASSWORD=${{Redis.REDIS_PASSWORD}}
-N8N_REDIS_DB=0
+# Redis (OPCIONAL - só se precisar de cache/queue)
+# N8N_REDIS_HOST=${{Redis.REDIS_HOST}}
+# N8N_REDIS_PORT=${{Redis.REDIS_PORT}}
+# N8N_REDIS_PASSWORD=${{Redis.REDIS_PASSWORD}}
+# N8N_REDIS_DB=0
 
-# URLs (Railway gera automaticamente)
-WEBHOOK_URL=${{RAILWAY_STATIC_URL}}
-N8N_HOST=${{RAILWAY_STATIC_URL}}
+# ⚠️  Configure APÓS o primeiro deploy
+# WEBHOOK_URL=https://sua-url-gerada.railway.app
 ```
+
+### **🔧 Passos para corrigir o 502:**
+1. **Redeploy** com o Dockerfile corrigido
+2. **Configure as variáveis** no painel Railway
+3. **Após deploy, adicione WEBHOOK_URL** com a URL gerada
+4. **Redeploy** novamente
 
 ## 📱 **Passo 4: Deploy WAHA**
 
